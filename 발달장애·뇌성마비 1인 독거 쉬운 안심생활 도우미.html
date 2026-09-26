@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>쉬운 안심 도우미 (발달·뇌성마비 1인 가구)</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Gowun Dodum & Pretendard -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Pretendard:wght@600;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            easy: ['"Gowun Dodum"', 'Pretendard', 'sans-serif'],
+          },
+          colors: {
+            easyYellow: '#fff275',
+            easyOrange: '#ff8c42',
+            easyGreen: '#4e937a',
+            easyBlue: '#0077b6',
+            easyRed: '#e63946',
+            easyBg: '#f7f9fa',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* 쉬운 글자 크기 기준 (기본 20px 이상) */
+    html {
+      font-size: 20px;
+    }
+    
+    body {
+      font-family: 'Gowun Dodum', 'Pretendard', sans-serif;
+      word-break: keep-all;
+    }
+
+    /* 손떨림 및 불수의 근경직 친화 대형 터치 타겟 */
+    .btn-giant {
+      min-height: 80px;
+    }
+
+    .btn-super-giant {
+      min-height: 100px;
+    }
+
+    /* 포커스 표시 굵은 테두리 */
+    button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 5px solid #ff8c42 !important;
+      outline-offset: 4px !important;
+    }
+
+    /* 고대비 모드 (노랑-검정 조합) */
+    body.high-contrast {
+      background-color: #000000 !important;
+      color: #ffff00 !important;
+    }
+    body.high-contrast .hc-card {
+      background-color: #1a1a1a !important;
+      border: 4px solid #ffff00 !important;
+      color: #ffff00 !important;
+    }
+    body.high-contrast .hc-text {
+      color: #ffffff !important;
+    }
+    body.high-contrast button {
+      border: 3px solid #ffff00 !important;
+      background-color: #262626 !important;
+      color: #ffff00 !important;
+    }
+    body.high-contrast button.active-tab {
+      background-color: #ffff00 !important;
+      color: #000000 !important;
+      font-weight: 900 !important;
+    }
+    body.high-contrast input, body.high-contrast select {
+      background-color: #000000 !important;
+      border: 3px solid #ffff00 !important;
+      color: #ffff00 !important;
+    }
+
+    /* A4 1장 쉬운 그림 요약지 인쇄 전용 스타일 */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printArea, #printArea * {
+        visibility: visible;
+      }
+      #printArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        background: white !important;
+        color: black !important;
+        border: 3px solid black !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-easyBg text-slate-900 min-h-screen pb-28 selection:bg-easyYellow transition-colors duration-200">
+
+  <!-- 상단 대형 알림바 & 접근성 도구 -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b-4 border-slate-300 shadow-md no-print px-4 py-3">
+    <div class="max-w-4xl mx-auto flex items-center justify-between gap-3">
+      
+      <!-- 귀여운 캐릭터 & 앱 이름 -->
+      <div class="flex items-center gap-3">
+        <div class="w-14 h-14 rounded-2xl bg-easyYellow border-2 border-slate-700 flex items-center justify-center text-3xl shadow">
+          🏠
+        </div>
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">쉬운 안심 도우미</h1>
+          <p class="text-sm sm:text-base font-bold text-slate-600">누르면 소리가 나요</p>
+        </div>
+      </div>
+
+      <!-- 고대비 & 쉬운 카드 인쇄 버튼 -->
+      <div class="flex items-center gap-2">
+        <button onclick="toggleHighContrast()" id="hcBtn" class="touch-target px-4 py-3 rounded-2xl bg-slate-900 text-yellow-300 font-black text-sm sm:text-base border-2 border-slate-800 shadow flex items-center gap-1 active:scale-95 transition">
+          <span>👀</span>
+          <span>선명하게</span>
+        </button>
+        <button onclick="window.print()" class="touch-target px-4 py-3 rounded-2xl bg-easyGreen text-white font-black text-sm sm:text-base border-2 border-teal-800 shadow flex items-center gap-1 active:scale-95 transition">
+          <span>🖨️</span>
+          <span>종이 인쇄</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 메인 컨테이너 -->
+  <main class="max-w-4xl mx-auto px-4 mt-5 space-y-6">
+
+    <!-- 쉬운 탭 메뉴 (누르기 쉬운 큼직한 버튼 4개) -->
+    <nav class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 no-print" role="tablist">
+      <button onclick="goTab('tab-daily')" id="btn-tab-daily" class="active-tab btn-giant p-2 rounded-2xl font-black text-lg sm:text-xl border-4 border-slate-800 bg-easyYellow text-slate-900 shadow-md flex flex-col items-center justify-center transition active:scale-95">
+        <span class="text-3xl">🗣️</span>
+        <span>안부·도움</span>
+      </button>
+
+      <button onclick="goTab('tab-hospital')" id="btn-tab-hospital" class="btn-giant p-2 rounded-2xl font-bold text-lg sm:text-xl border-4 border-slate-300 bg-white text-slate-800 shadow-sm flex flex-col items-center justify-center transition active:scale-95">
+        <span class="text-3xl">🏥</span>
+        <span>병원 보여주기</span>
+      </button>
+
+      <button onclick="goTab('tab-benefit')" id="btn-tab-benefit" class="btn-giant p-2 rounded-2xl font-bold text-lg sm:text-xl border-4 border-slate-300 bg-white text-slate-800 shadow-sm flex flex-col items-center justify-center transition active:scale-95">
+        <span class="text-3xl">🎁</span>
+        <span>내 혜택 챙기기</span>
+      </button>
+
+      <button onclick="goTab('tab-contacts')" id="btn-tab-contacts" class="btn-giant p-2 rounded-2xl font-bold text-lg sm:text-xl border-4 border-slate-300 bg-white text-slate-800 shadow-sm flex flex-col items-center justify-center transition active:scale-95">
+        <span class="text-3xl">💊</span>
+        <span>전화·약 챙기기</span>
+      </button>
+    </nav>
+
+    <!-- 탭 1: 오늘 하루 안부 / 도와주세요 -->
+    <section id="tab-daily" class="space-y-4">
+      <div class="hc-card bg-white p-5 rounded-3xl border-4 border-slate-800 shadow-md space-y-2">
+        <div class="flex items-center gap-2">
+          <span class="text-3xl">🌞</span>
+          <h2 class="text-2xl font-black text-slate-900">버튼을 누르면 큰 소리로 말해요!</h2>
+        </div>
+        <p class="text-slate-600 font-bold hc-text text-base sm:text-lg">
+          필요한 버튼을 손가락으로 꾹 눌러보세요.
+        </p>
+      </div>
+
+      <!-- 슈퍼 대형 AAC 버튼 그리드 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+        <!-- 버튼 1 -->
+        <button onclick="handleAAC('오늘 아침 기분 좋게 잘 일어났어요! 걱정하지 마세요.')" class="btn-super-giant p-4 rounded-3xl bg-green-100 hover:bg-green-200 border-4 border-green-600 text-left flex items-center gap-4 shadow-lg active:scale-95 transition">
+          <span class="text-5xl">😄</span>
+          <div>
+            <span class="block text-2xl font-black text-green-950">잘 일어났어요!</span>
+            <span class="block text-base font-bold text-green-800">"기분 좋게 잘 있어요"</span>
+          </div>
+        </button>
+
+        <!-- 버튼 2 -->
+        <button onclick="handleAAC('배가 고파요. 밥이나 반찬 도움이 필요해요.')" class="btn-super-giant p-4 rounded-3xl bg-amber-100 hover:bg-amber-200 border-4 border-amber-600 text-left flex items-center gap-4 shadow-lg active:scale-95 transition">
+          <span class="text-5xl">🍚</span>
+          <div>
+            <span class="block text-2xl font-black text-amber-950">배고파요 / 밥 필요해요</span>
+            <span class="block text-base font-bold text-amber-800">"도시락, 반찬이 필요해요"</span>
+          </div>
+        </button>
+
+        <!-- 버튼 3 -->
+        <button onclick="handleAAC('몸이 쑤시고 아파요. 병원에 가고 싶어요. 도와주세요.')" class="btn-super-giant p-4 rounded-3xl bg-sky-100 hover:bg-sky-200 border-4 border-sky-600 text-left flex items-center gap-4 shadow-lg active:scale-95 transition">
+          <span class="text-5xl">🤒</span>
+          <div>
+            <span class="block text-2xl font-black text-sky-950">몸이 아파요</span>
+            <span class="block text-base font-bold text-sky-800">"병원에 가고 싶어요"</span>
+          </div>
+        </button>
+
+        <!-- 버튼 4 -->
+        <button onclick="handleAAC('다쳤거나 넘어졌어요! 혼자 일어날 수 없어요. 도와주세요!')" class="btn-super-giant p-4 rounded-3xl bg-purple-100 hover:bg-purple-200 border-4 border-purple-600 text-left flex items-center gap-4 shadow-lg active:scale-95 transition">
+          <span class="text-5xl">🤕</span>
+          <div>
+            <span class="block text-2xl font-black text-purple-950">넘어졌어요 / 다쳤어요</span>
+            <span class="block text-base font-bold text-purple-800">"혼자 일어나기 힘들어요"</span>
+          </div>
+        </button>
+
+        <!-- 버튼 5 (긴급 119) -->
+        <button onclick="handleEmergency119()" class="btn-super-giant col-span-1 sm:col-span-2 p-5 rounded-3xl bg-red-100 hover:bg-red-200 border-4 border-red-600 text-left flex items-center justify-between gap-4 shadow-xl active:scale-95 transition">
+          <div class="flex items-center gap-4">
+            <span class="text-5xl animate-bounce">🚨</span>
+            <div>
+              <span class="block text-2xl sm:text-3xl font-black text-red-950">위험해요! 119 불러주세요!</span>
+              <span class="block text-base sm:text-lg font-bold text-red-800">위급할 때 누르면 바로 소리가 나고 119 전화 화면이 뜹니다</span>
+            </div>
+          </div>
+          <span class="text-3xl font-black text-red-600 hidden sm:block">누르기 👉</span>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- 탭 2: 병원 갈 때 의사·간호사에게 보여주는 쉬운 카드 -->
+    <section id="tab-hospital" class="hidden space-y-4">
+      <div class="hc-card bg-amber-50 p-5 rounded-3xl border-4 border-amber-500 shadow-md">
+        <h2 class="text-2xl font-black text-amber-950 flex items-center gap-2">
+          <span>🩺</span>
+          <span>의사·간호사 선생님께 이 화면을 보여주세요</span>
+        </h2>
+        <p class="text-base sm:text-lg font-bold text-amber-900 mt-1">
+          말하기 힘들 때 버튼을 누르면 스마트폰이 대신 큰 소리로 말해줍니다.
+        </p>
+      </div>
+
+      <div class="space-y-3.5">
+        <!-- 의사 소통 배려 -->
+        <button onclick="speak('말이 조금 느리거나 어눌해도 머릿속으로 다 알아들어요. 천천히 차근차근 말씀해 주세요.')" class="w-full btn-giant p-4 rounded-3xl bg-white border-4 border-slate-700 text-left flex items-center gap-4 shadow-md active:scale-95 transition">
+          <span class="text-4xl">👂</span>
+          <div>
+            <span class="block text-xl sm:text-2xl font-black text-slate-900">말이 느려도 다 알아들어요! 천천히 말해주세요</span>
+            <span class="block text-sm sm:text-base font-bold text-slate-600">누르면: "다 알아들으니 천천히 말씀해 주세요" 소리 남</span>
+          </div>
+        </button>
+
+        <!-- 근육 경직 주의 -->
+        <button onclick="speak('몸이 굳거나 손발이 떨려도 놀라지 마세요. 힘으로 억지로 펴려고 누르면 더 굳으니 조금만 기다려주세요.')" class="w-full btn-giant p-4 rounded-3xl bg-white border-4 border-slate-700 text-left flex items-center gap-4 shadow-md active:scale-95 transition">
+          <span class="text-4xl">✋</span>
+          <div>
+            <span class="block text-xl sm:text-2xl font-black text-slate-900">몸이 떨리거나 굳어도 억지로 펴지 마세요</span>
+            <span class="block text-sm sm:text-base font-bold text-slate-600">누르면: "경직이 있으니 힘으로 억지로 펴지 마세요" 소리 남</span>
+          </div>
+        </button>
+
+        <!-- 기초생활수급 의료급여 알림 -->
+        <button onclick="speak('저는 혼자 사는 기초생활수급자 의료급여 대상자입니다. 진료비 혜택 확인을 부탁드립니다.')" class="w-full btn-giant p-4 rounded-3xl bg-white border-4 border-slate-700 text-left flex items-center gap-4 shadow-md active:scale-95 transition">
+          <span class="text-4xl">🏥</span>
+          <div>
+            <span class="block text-xl sm:text-2xl font-black text-slate-900">기초생활수급 의료급여 대상자예요</span>
+            <span class="block text-sm sm:text-base font-bold text-slate-600">누르면: "의료급여 수급자입니다. 확인 부탁드립니다" 소리 남</span>
+          </div>
+        </button>
+
+        <!-- 복지사 연락 요청 -->
+        <button onclick="callAndSpeakSW()" class="w-full btn-giant p-4 rounded-3xl bg-white border-4 border-slate-700 text-left flex items-center gap-4 shadow-md active:scale-95 transition">
+          <span class="text-4xl">📞</span>
+          <div>
+            <span class="block text-xl sm:text-2xl font-black text-slate-900">혼자 왔어요. 담당 복지사 선생님께 전화해주세요</span>
+            <span class="block text-sm sm:text-base font-bold text-slate-600">누르면: 복지사 연락처를 음성으로 말하고 바로 전화를 걸 수 있습니다</span>
+          </div>
+        </button>
+
+        <!-- 주사/약물 질문 -->
+        <button onclick="speak('어디에 놓는 주사인가요? 어떤 약인가요? 알기 쉽게 설명해 주세요.')" class="w-full btn-giant p-4 rounded-3xl bg-white border-4 border-slate-700 text-left flex items-center gap-4 shadow-md active:scale-95 transition">
+          <span class="text-4xl">💉</span>
+          <div>
+            <span class="block text-xl sm:text-2xl font-black text-slate-900">어떤 주사나 약인지 쉽게 설명해 주세요</span>
+            <span class="block text-sm sm:text-base font-bold text-slate-600">누르면: "무슨 주사인지 쉽게 설명해 주세요" 소리 남</span>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- 탭 3: 복지관 / 공공 혜택 챙기기 (쉬운 말 체크리스트) -->
+    <section id="tab-benefit" class="hidden space-y-4">
+      <div class="hc-card bg-green-50 p-5 rounded-3xl border-4 border-green-600 shadow-md">
+        <h2 class="text-2xl font-black text-green-950 flex items-center gap-2">
+          <span>🎁</span>
+          <span>내가 받을 수 있는 소중한 복지 선물</span>
+        </h2>
+        <p class="text-base sm:text-lg font-bold text-green-900 mt-1">
+          받고 있는 것은 터치해서 체크해보세요. 안 받고 있다면 복지관에 물어보세요!
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <!-- 체크 1: 119 안심벨 -->
+        <div onclick="toggleEasyCheck('chk_iot')" class="p-4 rounded-3xl border-4 border-slate-700 bg-white flex items-center justify-between gap-3 shadow-md cursor-pointer hover:bg-slate-50 transition">
+          <div class="flex items-center gap-4">
+            <span class="text-4xl">🔔</span>
+            <div>
+              <span class="block text-xl sm:text-2xl font-black text-slate-900">집에 누르면 119 오는 안심벨 달았나요?</span>
+              <span class="block text-sm sm:text-base font-bold text-slate-600">쓰러졌을 때 자동으로 알려주는 기계 (무료)</span>
+            </div>
+          </div>
+          <input type="checkbox" id="chk_iot" class="w-9 h-9 rounded-xl accent-easyGreen pointer-events-none">
+        </div>
+
+        <!-- 체크 2: 활동지원사 시간 -->
+        <div onclick="toggleEasyCheck('chk_helper')" class="p-4 rounded-3xl border-4 border-slate-700 bg-white flex items-center justify-between gap-3 shadow-md cursor-pointer hover:bg-slate-50 transition">
+          <div class="flex items-center gap-4">
+            <span class="text-4xl">🤝</span>
+            <div>
+              <span class="block text-xl sm:text-2xl font-black text-slate-900">활동지원사 선생님 시간 많이 받았나요?</span>
+              <span class="block text-sm sm:text-base font-bold text-slate-600">혼자 사는 사람에게 주는 '독거 추가 시간' 혜택</span>
+            </div>
+          </div>
+          <input type="checkbox" id="chk_helper" class="w-9 h-9 rounded-xl accent-easyGreen pointer-events-none">
+        </div>
+
+        <!-- 체크 3: 밥과 반찬 배달 -->
+        <div onclick="toggleEasyCheck('chk_food')" class="p-4 rounded-3xl border-4 border-slate-700 bg-white flex items-center justify-between gap-3 shadow-md cursor-pointer hover:bg-slate-50 transition">
+          <div class="flex items-center gap-4">
+            <span class="text-4xl">🍱</span>
+            <div>
+              <span class="block text-xl sm:text-2xl font-black text-slate-900">쌀이나 맛있는 반찬 배달 오나요?</span>
+              <span class="block text-sm sm:text-base font-bold text-slate-600">주민센터나 복지관에서 집으로 가져다주는 식사</span>
+            </div>
+          </div>
+          <input type="checkbox" id="chk_food" class="w-9 h-9 rounded-xl accent-easyGreen pointer-events-none">
+        </div>
+
+        <!-- 체크 4: 집으로 오는 의사 -->
+        <div onclick="toggleEasyCheck('chk_doctor')" class="p-4 rounded-3xl border-4 border-slate-700 bg-white flex items-center justify-between gap-3 shadow-md cursor-pointer hover:bg-slate-50 transition">
+          <div class="flex items-center gap-4">
+            <span class="text-4xl">🩺</span>
+            <div>
+              <span class="block text-xl sm:text-2xl font-black text-slate-900">의사 선생님이 집으로 찾아오는 진료 신청했나요?</span>
+              <span class="block text-sm sm:text-base font-bold text-slate-600">다리가 아파 병원 못 갈 때 의사가 집으로 옴 (무료)</span>
+            </div>
+          </div>
+          <input type="checkbox" id="chk_doctor" class="w-9 h-9 rounded-xl accent-easyGreen pointer-events-none">
+        </div>
+
+        <!-- 체크 5: 공공후견인 -->
+        <div onclick="toggleEasyCheck('chk_guardian')" class="p-4 rounded-3xl border-4 border-slate-700 bg-white flex items-center justify-between gap-3 shadow-md cursor-pointer hover:bg-slate-50 transition">
+          <div class="flex items-center gap-4">
+            <span class="text-4xl">⚖️</span>
+            <div>
+              <span class="block text-xl sm:text-2xl font-black text-slate-900">내 편이 되어 서류 써주는 공공후견인 있나요?</span>
+              <span class="block text-sm sm:text-base font-bold text-slate-600">은행 일, 집 계약, 병원 입원을 나라에서 무료로 도와줌</span>
+            </div>
+          </div>
+          <input type="checkbox" id="chk_guardian" class="w-9 h-9 rounded-xl accent-easyGreen pointer-events-none">
+        </div>
+      </div>
+    </section>
+
+    <!-- 탭 4: 내 비상 연락처 & 쉬운 복약 카드 -->
+    <section id="tab-contacts" class="hidden space-y-5">
+
+      <!-- 오늘 약 먹었나요? 3단계 큰 체크버튼 -->
+      <div class="hc-card bg-purple-50 p-5 rounded-3xl border-4 border-purple-600 shadow-md space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-3xl">💊</span>
+            <h2 class="text-2xl font-black text-purple-950">오늘 약 챙겨 먹기</h2>
+          </div>
+          <button onclick="resetMeds()" class="px-3 py-1.5 rounded-xl bg-white border-2 border-purple-700 text-purple-900 font-bold text-sm">다시 시작</button>
+        </div>
+        <p class="text-base font-bold text-purple-900">약을 먹었으면 큰 버튼을 터치해 주세요!</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <!-- 아침약 -->
+          <button onclick="toggleMed('med_morning')" id="btn_med_morning" class="btn-giant p-3 rounded-2xl border-4 border-slate-400 bg-white text-slate-800 font-black text-xl flex items-center justify-center gap-3 transition">
+            <span class="text-3xl">🌅</span>
+            <span>아침 약</span>
+            <span id="badge_med_morning" class="text-xl">⭕ 안 먹음</span>
+          </button>
+          <!-- 점심약 -->
+          <button onclick="toggleMed('med_lunch')" id="btn_med_lunch" class="btn-giant p-3 rounded-2xl border-4 border-slate-400 bg-white text-slate-800 font-black text-xl flex items-center justify-center gap-3 transition">
+            <span class="text-3xl">☀️</span>
+            <span>점심 약</span>
+            <span id="badge_med_lunch" class="text-xl">⭕ 안 먹음</span>
+          </button>
+          <!-- 저녁약 -->
+          <button onclick="toggleMed('med_dinner')" id="btn_med_dinner" class="btn-giant p-3 rounded-2xl border-4 border-slate-400 bg-white text-slate-800 font-black text-xl flex items-center justify-center gap-3 transition">
+            <span class="text-3xl">🌙</span>
+            <span>저녁 약</span>
+            <span id="badge_med_dinner" class="text-xl">⭕ 안 먹음</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 원터치 전화 걸기 카드 -->
+      <div class="hc-card bg-white p-5 rounded-3xl border-4 border-slate-800 shadow-md space-y-4">
+        <h2 class="text-2xl font-black text-slate-900 flex items-center gap-2">
+          <span>📞</span>
+          <span>누르면 바로 전화가 걸려요</span>
+        </h2>
+
+        <!-- 복지사 번호 입력 및 전화 -->
+        <div class="p-4 rounded-2xl bg-slate-50 border-2 border-slate-300 space-y-2">
+          <label class="block text-base font-black text-slate-700">내 담당 복지사 선생님 번호</label>
+          <div class="flex gap-2">
+            <input type="tel" id="swPhoneInput" placeholder="010-0000-0000" oninput="saveContacts()" class="w-full text-xl font-bold px-3 py-2 bg-white border-2 border-slate-400 rounded-xl">
+            <a id="swCallLink" href="tel:01000000000" class="btn-giant px-6 rounded-2xl bg-easyGreen text-white font-black text-xl flex items-center justify-center gap-2 shadow active:scale-95 whitespace-nowrap">
+              <span>📞 전화</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- 119 즉시 전화 -->
+          <a href="tel:119" class="btn-giant p-4 rounded-2xl bg-red-50 hover:bg-red-100 border-4 border-red-500 text-red-950 font-black text-xl flex items-center gap-3 shadow active:scale-95">
+            <span class="text-4xl">🚑</span>
+            <div>
+              <span class="block">119 구조대 전화</span>
+              <span class="text-xs text-red-700">위급할 때 바로 연결</span>
+            </div>
+          </a>
+
+          <!-- 보건복지부 129 전화 -->
+          <a href="tel:129" class="btn-giant p-4 rounded-2xl bg-blue-50 hover:bg-blue-100 border-4 border-blue-500 text-blue-950 font-black text-xl flex items-center gap-3 shadow active:scale-95">
+            <span class="text-4xl">☎️</span>
+            <div>
+              <span class="block">복지상담 129 전화</span>
+              <span class="text-xs text-blue-700">돈이나 반찬이 없을 때</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- A4 1장 쉬운 안심 요약지 (인쇄 전용 모루) -->
+    <div id="printArea" class="hidden print:block bg-white p-6 border-4 border-black text-black space-y-4">
+      <div class="border-b-4 border-black pb-3 flex justify-between items-center">
+        <div>
+          <span class="text-sm font-black bg-black text-white px-2 py-0.5 rounded">기초생활수급 1인 독거 가구</span>
+          <h2 class="text-3xl font-black mt-1">응급 환자 알림 & 의사소통 카드</h2>
+        </div>
+        <div class="text-right text-sm font-bold">
+          <p class="text-red-600">※ 보호자가 없는 독거 장애인입니다</p>
+          <p id="printDate">작성일: 2026.09.28</p>
+        </div>
+      </div>
+
+      <div class="p-3 border-2 border-black bg-slate-100 font-bold text-lg leading-relaxed">
+        📢 <strong>의료진 및 구급대원 필독:</strong> 본인은 <strong>발달 및 뇌성마비 1인 독거 장애인</strong>입니다. 말이 다소 어눌하거나 느릴 수 있으나 <u>상대의 말을 충분히 알아들을 수 있습니다.</u> 긴장 시 신체 경직이 올 수 있으니 억지로 힘으로 누르지 마시고 천천히 대해 주시기 바랍니다.
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 text-base font-bold">
+        <div class="p-3 border border-black">
+          <span class="text-slate-600 block text-sm">성명 / 생년월일</span>
+          <span id="printName" class="text-xl font-black">당사자 본인</span>
+        </div>
+        <div class="p-3 border border-black">
+          <span class="text-slate-600 block text-sm">복지 자격</span>
+          <span class="text-xl font-black">국민기초생활 의료급여 수급자</span>
+        </div>
+      </div>
+
+      <div class="space-y-2 text-base font-bold">
+        <div class="p-3 border border-black">
+          <span class="block text-sm text-slate-600">📞 가장 먼저 연락할 담당 사회복지사</span>
+          <span id="printSWPhone" class="text-xl font-black text-blue-900">010-0000-0000 (전담 복지사)</span>
+        </div>
+        <div class="p-3 border border-black">
+          <span class="block text-sm text-slate-600">⚠️ 진료 시 꼭 지켜줄 점</span>
+          <ul class="list-disc pl-5 space-y-1 text-sm">
+            <li>말을 천천히 해 주시고 답변을 기다려 주세요.</li>
+            <li>손발 떨림이나 경직 시 억지로 펴려고 힘을 주지 마세요.</li>
+            <li>주사나 처방약 내용을 쉬운 말로 설명해 주세요.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 쉬운 토스트 팝업 (음성 낭독 중 알림) -->
+  <div id="toastPopup" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden bg-slate-900 text-yellow-300 px-6 py-4 rounded-3xl shadow-2xl border-4 border-yellow-300 text-lg font-black flex items-center gap-3">
+    <span class="text-2xl animate-spin">🔊</span>
+    <span id="toastMsg">소리로 말하고 있어요</span>
+  </div>
+
+  <script>
+    // Storage Keys
+    const KEY_MED_CHECK = 'easy_med_check_date';
+    const KEY_BENEFITS = 'easy_benefit_checks';
+    const KEY_SW_PHONE = 'easy_sw_phone';
+
+    let isHighContrast = false;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadContacts();
+      loadBenefits();
+      checkMedDateReset();
+
+      // 인쇄 날짜 표시
+      const now = new Date();
+      const printDateEl = document.getElementById('printDate');
+      if (printDateEl) {
+        printDateEl.innerText = `작성일: ${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+      }
+    });
+
+    // 1. 탭 이동
+    function goTab(tabId) {
+      const tabs = ['tab-daily', 'tab-hospital', 'tab-benefit', 'tab-contacts'];
+      tabs.forEach(id => {
+        const sec = document.getElementById(id);
+        const btn = document.getElementById(`btn-${id}`);
+        if (sec && btn) {
+          if (id === tabId) {
+            sec.classList.remove('hidden');
+            btn.classList.add('bg-easyYellow', 'border-slate-800', 'active-tab');
+            btn.classList.remove('bg-white', 'border-slate-300');
+          } else {
+            sec.classList.add('hidden');
+            btn.classList.remove('bg-easyYellow', 'border-slate-800', 'active-tab');
+            btn.classList.add('bg-white', 'border-slate-300');
+          }
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 2. Web Speech API (TTS) 낭독기
+    function speak(text) {
+      if (!('speechSynthesis' in window)) {
+        showToast('소리 말하기를 지원하지 않는 기기입니다');
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'ko-KR';
+      utterance.rate = 0.85; // 천천히 또박또박 낭독
+      utterance.pitch = 1.0;
+      window.speechSynthesis.speak(utterance);
+      showToast(text);
+    }
+
+    // 3. 안부 버튼 클릭 시 (음성 + 복사)
+    function handleAAC(text) {
+      speak(text);
+      copyToClipboard(text);
+    }
+
+    // 4. 119 긴급 버튼
+    function handleEmergency119() {
+      speak('긴급 상황입니다! 일일구에 연락해 주세요! 살려주세요!');
+      setTimeout(() => {
+        window.location.href = 'tel:119';
+      }, 1500);
+    }
+
+    // 5. 복지사에게 전화 및 의료진 음성 안내
+    function callAndSpeakSW() {
+      const phone = document.getElementById('swPhoneInput').value.trim() || '등록된 번호가 없습니다';
+      speak(`저는 혼자 사는 독거 장애인입니다. 담당 사회복지사 선생님 번호는 ${phone} 번입니다. 전화 연결을 부탁드립니다.`);
+      setTimeout(() => {
+        if (phone && phone !== '등록된 번호가 없습니다') {
+          window.location.href = `tel:${phone.replace(/-/g, '')}`;
+        }
+      }, 2500);
+    }
+
+    // 6. 복지 혜택 체크리스트 저장
+    function toggleEasyCheck(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.checked = !el.checked;
+
+      const saved = JSON.parse(localStorage.getItem(KEY_BENEFITS) || '{}');
+      saved[id] = el.checked;
+      localStorage.setItem(KEY_BENEFITS, JSON.stringify(saved));
+
+      if (el.checked) {
+        speak('참 잘했어요! 혜택을 확인했습니다.');
+      }
+    }
+
+    function loadBenefits() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(KEY_BENEFITS) || '{}');
+        ['chk_iot', 'chk_helper', 'chk_food', 'chk_doctor', 'chk_guardian'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el && saved[id]) {
+            el.checked = true;
+          }
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // 7. 복약 체크 (원터치 토글 및 하루 리셋)
+    function toggleMed(medKey) {
+      const btn = document.getElementById(`btn_${medKey}`);
+      const badge = document.getElementById(`badge_${medKey}`);
+      if (!btn || !badge) return;
+
+      const isDone = btn.classList.contains('bg-green-200');
+
+      if (!isDone) {
+        btn.classList.remove('bg-white', 'border-slate-400');
+        btn.classList.add('bg-green-200', 'border-green-600', 'text-green-950');
+        badge.innerText = '✅ 먹었어요!';
+        speak('약 챙겨 먹기 완료! 건강해질 거예요.');
+        saveMedState(medKey, true);
+      } else {
+        btn.classList.add('bg-white', 'border-slate-400');
+        btn.classList.remove('bg-green-200', 'border-green-600', 'text-green-950');
+        badge.innerText = '⭕ 안 먹음';
+        saveMedState(medKey, false);
+      }
+    }
+
+    function saveMedState(medKey, status) {
+      const today = new Date().toDateString();
+      const data = JSON.parse(localStorage.getItem(KEY_MED_CHECK) || '{}');
+      if (data.date !== today) {
+        data.date = today;
+        data.meds = {};
+      }
+      data.meds = data.meds || {};
+      data.meds[medKey] = status;
+      localStorage.setItem(KEY_MED_CHECK, JSON.stringify(data));
+    }
+
+    function checkMedDateReset() {
+      const today = new Date().toDateString();
+      try {
+        const data = JSON.parse(localStorage.getItem(KEY_MED_CHECK) || '{}');
+        if (data.date === today && data.meds) {
+          ['med_morning', 'med_lunch', 'med_dinner'].forEach(key => {
+            if (data.meds[key]) {
+              const btn = document.getElementById(`btn_${key}`);
+              const badge = document.getElementById(`badge_${key}`);
+              if (btn && badge) {
+                btn.classList.remove('bg-white', 'border-slate-400');
+                btn.classList.add('bg-green-200', 'border-green-600', 'text-green-950');
+                badge.innerText = '✅ 먹었어요!';
+              }
+            }
+          });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function resetMeds() {
+      ['med_morning', 'med_lunch', 'med_dinner'].forEach(key => {
+        const btn = document.getElementById(`btn_${key}`);
+        const badge = document.getElementById(`badge_${key}`);
+        if (btn && badge) {
+          btn.classList.add('bg-white', 'border-slate-400');
+          btn.classList.remove('bg-green-200', 'border-green-600', 'text-green-950');
+          badge.innerText = '⭕ 안 먹음';
+        }
+      });
+      localStorage.removeItem(KEY_MED_CHECK);
+      speak('약 먹기 상태를 다시 깨끗하게 비웠습니다.');
+    }
+
+    // 8. 연락처 저장 및 인쇄 시트 동기화
+    function saveContacts() {
+      const val = document.getElementById('swPhoneInput').value.trim();
+      localStorage.setItem(KEY_SW_PHONE, val);
+
+      const link = document.getElementById('swCallLink');
+      if (link) {
+        link.href = `tel:${val.replace(/-/g, '')}`;
+      }
+
+      const printSW = document.getElementById('printSWPhone');
+      if (printSW) {
+        printSW.innerText = `${val} (담당 복지사 선생님)`;
+      }
+    }
+
+    function loadContacts() {
+      const saved = localStorage.getItem(KEY_SW_PHONE);
+      if (saved) {
+        const input = document.getElementById('swPhoneInput');
+        if (input) input.value = saved;
+
+        const link = document.getElementById('swCallLink');
+        if (link) link.href = `tel:${saved.replace(/-/g, '')}`;
+
+        const printSW = document.getElementById('printSWPhone');
+        if (printSW) printSW.innerText = `${saved} (담당 복지사 선생님)`;
+      }
+    }
+
+    // 9. 고대비 토글
+    function toggleHighContrast() {
+      isHighContrast = !isHighContrast;
+      const body = document.body;
+      const btn = document.getElementById('hcBtn');
+      if (isHighContrast) {
+        body.classList.add('high-contrast');
+        if (btn) btn.innerText = '☀️ 기본화면';
+        speak('선명한 노랑 검정 화면으로 바뀌었습니다.');
+      } else {
+        body.classList.remove('high-contrast');
+        if (btn) btn.innerText = '👀 선명하게';
+        speak('원래 화면으로 돌아왔습니다.');
+      }
+    }
+
+    // 10. 쉬운 토스트 팝업 & 클립보드 복사
+    function showToast(msg) {
+      const toast = document.getElementById('toastPopup');
+      const text = document.getElementById('toastMsg');
+      if (!toast || !text) return;
+
+      text.innerText = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    function copyToClipboard(text) {
+      const temp = document.createElement('textarea');
+      temp.value = text;
+      temp.style.position = 'fixed';
+      temp.style.left = '-9999px';
+      document.body.appendChild(temp);
+      temp.select();
+      try {
+        document.execCommand('copy');
+      } catch (e) {}
+      document.body.removeChild(temp);
+    }
+  </script>
+</body>
+</html>

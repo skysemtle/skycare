@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>기초생활수급 뇌성마비 1인 독거 안전망 플래너 & 응급 의료복지 카드</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Pretendard Web Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              deepNavy: '#0c1b2a',
+              navy: '#132d46',
+              cyan: '#01c38d',
+              cyanDark: '#138e69',
+              gold: '#f3a63b',
+              alert: '#e63946',
+              bgLight: '#f4f7f6',
+              cardLight: '#ffffff'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      --base-font-size: 17px;
+    }
+    html {
+      font-size: var(--base-font-size);
+    }
+    
+    /* Extra-large hit targets for involuntary tremors & spasticity */
+    .touch-target {
+      min-height: 54px;
+    }
+
+    /* Accessibility focus ring */
+    button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+      outline: 4px solid #01c38d !important;
+      outline-offset: 3px !important;
+    }
+
+    /* High Contrast Mode (Yellow text on Black / Black on Yellow) */
+    body.high-contrast {
+      background-color: #000000 !important;
+      color: #ffff00 !important;
+    }
+    body.high-contrast .hc-box {
+      background-color: #121212 !important;
+      border: 3px solid #ffff00 !important;
+      color: #ffff00 !important;
+    }
+    body.high-contrast .hc-subtext {
+      color: #ffffff !important;
+    }
+    body.high-contrast button {
+      border: 2px solid #ffff00 !important;
+      background-color: #222222 !important;
+      color: #ffff00 !important;
+    }
+    body.high-contrast button.active-btn {
+      background-color: #ffff00 !important;
+      color: #000000 !important;
+      font-weight: 900 !important;
+    }
+    body.high-contrast input, 
+    body.high-contrast textarea, 
+    body.high-contrast select {
+      background-color: #000000 !important;
+      border: 2px solid #ffff00 !important;
+      color: #ffff00 !important;
+    }
+
+    /* Print-Only Optimization: Clean A4 Medical Card */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printCard, #printCard * {
+        visibility: visible;
+      }
+      #printCard {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 24px;
+        background: #ffffff !important;
+        color: #000000 !important;
+        border: 2px solid #000000 !important;
+        box-shadow: none !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-brand-bgLight text-slate-800 font-sans antialiased min-h-screen pb-24 selection:bg-brand-cyan selection:text-brand-deepNavy transition-colors duration-200">
+
+  <!-- Top Accessible Header & Controls -->
+  <header class="sticky top-0 z-40 bg-brand-deepNavy/95 text-white backdrop-blur-md border-b-2 border-slate-700 shadow-md no-print">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-3">
+      
+      <!-- Brand & Status Tag -->
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl bg-brand-cyan flex items-center justify-center text-brand-deepNavy shadow-md flex-shrink-0">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="text-lg sm:text-xl font-black tracking-tight text-white">기초수급 뇌성마비 1인 독거 안전망</h1>
+            <span class="bg-brand-gold text-slate-900 text-xs font-black px-2 py-0.5 rounded-full">공공복지·의료 연계</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 font-medium hidden sm:block">보호자 없는 상황을 위한 의료급여·공공후견·응급안전 통합 솔루션</p>
+        </div>
+      </div>
+
+      <!-- Accessibility Toolbar: Font Resize, High-Contrast, Print -->
+      <div class="flex items-center gap-2">
+        <!-- Font Size Switcher -->
+        <button onclick="toggleFontSize()" id="fontSizeToggleBtn" class="touch-target px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 font-bold text-xs sm:text-sm flex items-center gap-1.5 transition">
+          <span class="text-base font-black">가+</span>
+          <span class="hidden md:inline">큰글자</span>
+        </button>
+        <!-- High Contrast Mode Switcher -->
+        <button onclick="toggleHighContrast()" id="hcToggleBtn" class="touch-target px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 font-bold text-xs sm:text-sm text-yellow-300 flex items-center gap-1.5 transition">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zm-7 8a7 7 0 0111.458-5.458 7 7 0 000 10.916A7 7 0 013 10z" clip-rule="evenodd"></path>
+          </svg>
+          <span class="hidden md:inline">고대비</span>
+        </button>
+        <!-- Print Medical Sheet -->
+        <button onclick="window.print()" class="touch-target px-3.5 py-2 rounded-xl bg-brand-cyan hover:bg-brand-cyanDark text-brand-deepNavy font-extrabold text-xs sm:text-sm shadow-md flex items-center gap-1.5 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+          </svg>
+          <span class="hidden sm:inline">A4 카드 인쇄</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 mt-6 space-y-6">
+
+    <!-- Urgent Speech & Identity Notice for Medical Staff / 119 -->
+    <section class="hc-box bg-white rounded-3xl p-5 sm:p-7 border-2 border-red-500/80 shadow-md space-y-4 no-print">
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <div class="flex items-center gap-2">
+          <span class="w-3.5 h-3.5 rounded-full bg-red-600 animate-pulse"></span>
+          <h2 class="text-lg sm:text-xl font-black text-red-600 tracking-tight flex items-center gap-2">
+            🚨 구급대원 & 의료진 필독 알림판 (원터치 음성 지원)
+          </h2>
+        </div>
+        <span class="text-xs font-bold text-slate-500 hc-subtext">조음장애·근경직 시 버튼을 누르면 음성으로 낭독됩니다</span>
+      </div>
+
+      <p class="text-sm font-semibold text-slate-700 hc-subtext leading-relaxed">
+        <strong>본인은 뇌성마비 독거 장애인(기초의료급여 수급자)입니다.</strong> 신체적 경직 및 발음의 어눌함이 있을 수 있으나 <u>인지능력은 온전합니다.</u> 억지로 사지를 누르면 경직이 심해지므로 천천히 기다려 주시기 바랍니다.
+      </p>
+
+      <!-- Quick Emergency Voice Buttons -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
+        <button onclick="speakText('저는 뇌성마비 독거 장애인입니다. 인지 능력은 완전히 정상이니 천천히 말씀해 주세요.')" class="touch-target p-3.5 rounded-2xl bg-red-50 hover:bg-red-100 border-2 border-red-200 text-left font-bold text-xs sm:text-sm text-red-900 flex items-center gap-2.5 transition active:scale-95">
+          <span class="text-xl">📢</span>
+          <span>"인지 정상입니다. 천천히 말씀해 주세요"</span>
+        </button>
+        <button onclick="speakText('말이 어눌하지만 들을 수 있습니다. 글로 적어주시거나 제가 답할 때까지 천천히 기다려주세요.')" class="touch-target p-3.5 rounded-2xl bg-amber-50 hover:bg-amber-100 border-2 border-amber-200 text-left font-bold text-xs sm:text-sm text-amber-900 flex items-center gap-2.5 transition active:scale-95">
+          <span class="text-xl">✍️</span>
+          <span>"말이 어눌하니 글로 써주시거나 기다려주세요"</span>
+        </button>
+        <button onclick="speakText('몸에 이상 긴장과 경직이 발생했습니다. 억지로 힘으로 누르지 마시고 이완될 때까지 잠시만 기다려주세요.')" class="touch-target p-3.5 rounded-2xl bg-purple-50 hover:bg-purple-100 border-2 border-purple-200 text-left font-bold text-xs sm:text-sm text-purple-900 flex items-center gap-2.5 transition active:scale-95">
+          <span class="text-xl">🧘</span>
+          <span>"경직 발생 시 누르지 말고 기다려주세요"</span>
+        </button>
+        <button onclick="speakText('저는 의료급여 수급자입니다. 전담 의료급여 관리사나 복지관 사회복지사에게 연락 부탁드립니다.')" class="touch-target p-3.5 rounded-2xl bg-emerald-50 hover:bg-emerald-100 border-2 border-emerald-200 text-left font-bold text-xs sm:text-sm text-emerald-900 flex items-center gap-2.5 transition active:scale-95">
+          <span class="text-xl">🏥</span>
+          <span>"의료급여 수급자입니다. 복지사 연락 요망"</span>
+        </button>
+        <button onclick="speakText('혼자 살고 있습니다. 보호자가 없어 병원 이동과 진료 보조, 귀가 시 동행 지원이 필요합니다.')" class="touch-target p-3.5 rounded-2xl bg-blue-50 hover:bg-blue-100 border-2 border-blue-200 text-left font-bold text-xs sm:text-sm text-blue-900 flex items-center gap-2.5 transition active:scale-95">
+          <span class="text-xl">🤝</span>
+          <span>"독거 가구입니다. 이동 동행 및 보조 필요"</span>
+        </button>
+        <button onclick="speakText('응급 약물 복용 확인이 필요합니다. 작성된 의료요약 카드를 먼저 확인해 주세요.')" class="touch-target p-3.5 rounded-2xl bg-slate-100 hover:bg-slate-200 border-2 border-slate-300 text-left font-bold text-xs sm:text-sm text-slate-800 flex items-center gap-2.5 transition active:scale-95">
+          <span class="text-xl">📋</span>
+          <span>"의료요약 카드를 먼저 확인해 주세요"</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Progress Indicator & Overview -->
+    <section class="hc-box bg-brand-deepNavy text-white rounded-3xl p-6 sm:p-7 shadow-lg relative overflow-hidden no-print">
+      <div class="relative z-10 space-y-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <span class="bg-brand-cyan/20 border border-brand-cyan/40 text-brand-cyan font-bold text-xs px-3 py-1 rounded-full">
+            독거 뇌성마비 안전망 실시간 준비 현황
+          </span>
+          <span id="progressPercent" class="text-brand-cyan text-lg font-black tracking-wider">0% (0 / 16 완료)</span>
+        </div>
+        <div class="w-full bg-slate-700/70 h-4 rounded-full overflow-hidden p-0.5 border border-slate-600">
+          <div id="progressBar" class="bg-gradient-to-r from-brand-cyan to-brand-gold h-full rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+        </div>
+        <p id="progressSummary" class="text-xs sm:text-sm text-slate-300 font-medium pt-1">
+          가장 먼저 '119 안심콜'과 '동주민센터 응급안전안심서비스'를 체크하여 위급 시 생명줄을 확보하세요.
+        </p>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <nav class="flex border-2 border-slate-200 bg-white rounded-2xl p-1.5 shadow-sm overflow-x-auto gap-2 no-print hc-box" role="tablist">
+      <button onclick="switchTab('tab-checklist')" id="btn-tab-checklist" class="active-btn touch-target flex-1 min-w-[130px] py-3 px-4 rounded-xl font-black text-sm text-center transition bg-brand-navy text-white flex items-center justify-center gap-2">
+        <span>✅ 4단계 안전망 플랜</span>
+      </button>
+      <button onclick="switchTab('tab-card')" id="btn-tab-card" class="touch-target flex-1 min-w-[130px] py-3 px-4 rounded-xl font-bold text-sm text-center transition text-slate-700 hover:bg-slate-100 flex items-center justify-center gap-2">
+        <span>📋 응급 의료·복지 카드 (A4)</span>
+      </button>
+      <button onclick="switchTab('tab-welfare')" id="btn-tab-welfare" class="touch-target flex-1 min-w-[130px] py-3 px-4 rounded-xl font-bold text-sm text-center transition text-slate-700 hover:bg-slate-100 flex items-center justify-center gap-2">
+        <span>🏛️ 공공후견·의료급여 제도</span>
+      </button>
+    </nav>
+
+    <!-- TAB 1: 4-STAGE SAFETY CHECKLIST -->
+    <section id="tab-checklist" class="space-y-6">
+
+      <!-- Phase 1: 즉시 / 첫 1주 안에 마칠 긴급 안전장치 -->
+      <div class="hc-box bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3 flex-wrap gap-2">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-xl bg-red-100 text-red-800 font-black flex items-center justify-center text-sm">1</span>
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900 hc-box">1단계: 첫 주 골든타임 확보 (무료 공공 등록)</h3>
+              <p class="text-xs text-slate-500 hc-subtext">쓰러졌을 때 즉각 구조대원이 병력과 거주형태를 알 수 있도록 등록합니다.</p>
+            </div>
+          </div>
+          <span class="text-xs font-bold text-red-700 bg-red-50 border border-red-200 px-3 py-1 rounded-full">필수 긴급조치</span>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Item 1 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_119_safe')">
+            <input type="checkbox" id="t_119_safe" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_119_safe" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">소방청 119 안심콜 서비스 등록 (의료급여 1/2종 및 뇌성마비 신체특성 기재)</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">신고 시 구급차 태블릿에 "뇌성마비, 보행불가/휠체어, 조음장애 있음, 의료급여 수급자"가 즉시 표시되고 전담 사회복지사에게 이송 알림이 갑니다.</span>
+            </label>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_emergency_iot')">
+            <input type="checkbox" id="t_emergency_iot" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_emergency_iot" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">동주민센터 '장애인 응급안전안심서비스' 신청 (화재센서·활동감지기·비상호출벨)</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">댁내에 움직임 감지 센서와 원터치 119 비상 호출기를 무상 설치하여 일정 시간 이상 움직임이 없으면 응급관리요원이 출동합니다.</span>
+            </label>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_phone_sos')">
+            <input type="checkbox" id="t_phone_sos" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_phone_sos" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">스마트폰 잠금화면 긴급의료정보 & 긴급 SOS 5회 연타 설정</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">화면이 잠긴 상태에서도 전원 버튼 5회 연속 클릭 시 위치 전송 및 구급대원이 지병(뇌성마비)과 복용약을 조회할 수 있도록 세팅합니다.</span>
+            </label>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_door_access')">
+            <input type="checkbox" id="t_door_access" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_door_access" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">현관문 비상 출입 경로 확보 (도어락 비번 신뢰인/복지관 공유 또는 비상키 보관)</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">안에서 낙상하거나 쓰러졌을 때 강제 개방 지연을 막기 위해 전담 사회복지사 또는 신뢰하는 활동지원사에게 비상출입 권한을 전달합니다.</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 2: 1개월 안 제도 정비 -->
+      <div class="hc-box bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3 flex-wrap gap-2">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 font-black flex items-center justify-center text-sm">2</span>
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900 hc-box">2단계: 1개월 내 의료급여 & 돌봄 가산 지원체계 완성</h3>
+              <p class="text-xs text-slate-500 hc-subtext">기초수급자 특화 돌봄급여와 방문 의료진을 내 편으로 만듭니다.</p>
+            </div>
+          </div>
+          <span class="text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">의료급여·돌봄연계</span>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Item 5 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_med_manager')">
+            <input type="checkbox" id="t_med_manager" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_med_manager" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">시·군·구청 '의료급여 관리사' 1:1 상담 및 전담 연계</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">의료급여 수급자의 중복 투약 점검, 선택병의원 지정, 상급종합병원 진료의뢰서 절차 및 본인부담금 면제 혜택을 전담 간호사 관리사와 상담합니다.</span>
+            </label>
+          </div>
+
+          <!-- Item 6 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_special_care')">
+            <input type="checkbox" id="t_special_care" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_special_care" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">장애인 활동지원 '독거가산(특별지원급여)' 신청</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">가족이 없는 독거 장애인은 기본 활동지원 시간 외에 월 최대 수십 시간의 추가 독거 바우처 급여를 국민연금공단/주민센터에 신청할 수 있습니다.</span>
+            </label>
+          </div>
+
+          <!-- Item 7 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_health_doctor')">
+            <input type="checkbox" id="t_health_doctor" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_health_doctor" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">보건소 '장애인 건강주치의' 방문진료·재활 등록</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">이동이 어려운 중증 뇌성마비 환자를 위해 의사·간호사가 직접 방문하여 만성질환 관리와 재활 운동을 지도하며 본인부담금이 면제·경감됩니다.</span>
+            </label>
+          </div>
+
+          <!-- Item 8 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_hospital_kit')">
+            <input type="checkbox" id="t_hospital_kit" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_hospital_kit" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">현관 앞 '비상 입원 키트' 배치 (처방전 사본·패드/기저귀·세면도구·충전기)</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">보호자 없이 119로 긴급 이송 시 구급대원이 즉시 들고 갈 수 있도록 현관 문 옆에 비상 가방을 항상 비치합니다.</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 3: 1년 이내 법적·사후 권익 확보 -->
+      <div class="hc-box bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3 flex-wrap gap-2">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-xl bg-purple-100 text-purple-800 font-black flex items-center justify-center text-sm">3</span>
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900 hc-box">3단계: 법적 대리권 & 자기결정권 보장 (국비 지원 제도)</h3>
+              <p class="text-xs text-slate-500 hc-subtext">판단력 저하나 임종 시 나를 지켜줄 법적 서류와 공영장례를 정비합니다.</p>
+            </div>
+          </div>
+          <span class="text-xs font-bold text-purple-800 bg-purple-50 border border-purple-200 px-3 py-1 rounded-full">공공후견·국비지원</span>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Item 9 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_public_guardian')">
+            <input type="checkbox" id="t_public_guardian" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_public_guardian" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">'공공성년후견 지원사업' 신청 (법원 청구비용 및 후견인 보수 전액 국비지원)</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">가족이 없는 기초수급 장애인을 위해 국가가 공공후견인을 지정하여 은행 업무, 임대주택 계약, 수술 동의 등 권익을 대리 보호해 줍니다.</span>
+            </label>
+          </div>
+
+          <!-- Item 10 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_living_will')">
+            <input type="checkbox" id="t_living_will" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_living_will" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">국립연명의료관리기관 '사전연명의료의향서' 등록 (보건소/건보공단 무료)</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">회복 불가능한 임종기에 무의미한 심폐소생술이나 인공호흡기 부착을 거부하고 존엄한 호스피스를 선택한다는 법적 서류를 미리 남깁니다.</span>
+            </label>
+          </div>
+
+          <!-- Item 11 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_public_funeral')">
+            <input type="checkbox" id="t_public_funeral" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_public_funeral" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">지자체 '공영장례' 및 '사전 장례주관자(지인·복지사)' 지정 상담</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">무연고 사망자로 처리되어 곧바로 화장되지 않도록, 친한 지인이나 복지사를 장례주관자로 지정해 존엄한 추모 의식을 보장받습니다.</span>
+            </label>
+          </div>
+
+          <!-- Item 12 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_pill_box')">
+            <input type="checkbox" id="t_pill_box" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_pill_box" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">손떨림 방지 7일 대형 분할 약통 & 식탁 위 복약 달력 비치</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">손가락 경직이 있어도 쉽게 열 수 있는 원터치 대형 약상자를 사용해 복약 누락 및 중복 복용을 방지합니다.</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 4: 매년 생일 루틴 -->
+      <div class="hc-box bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3 flex-wrap gap-2">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-xl bg-blue-100 text-blue-800 font-black flex items-center justify-center text-sm">4</span>
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900 hc-box">4단계: 매년 생일 안전망 갱신 루틴</h3>
+              <p class="text-xs text-slate-500 hc-subtext">1년에 한 번 나를 위한 선물로 복지 번호와 인지 건강을 점검합니다.</p>
+            </div>
+          </div>
+          <span class="text-xs font-bold text-blue-800 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">연례 점검</span>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Item 13 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_cist_check')">
+            <input type="checkbox" id="t_cist_check" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_cist_check" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">보건소 치매안심센터 무료 인지선별검사(CIST) 수검</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">나이가 들며 생길 수 있는 조기 인지장애를 무료로 점검하고 데이터로 추적 관리합니다.</span>
+            </label>
+          </div>
+
+          <!-- Item 14 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_contacts_update')">
+            <input type="checkbox" id="t_contacts_update" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_contacts_update" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">전담 사회복지사·동주민센터 복지플래너 연락처 최신화</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">복지관 담당자나 공무원 인사이동으로 변경된 담당자 전화번호를 확인하여 비상 연락망을 업데이트합니다.</span>
+            </label>
+          </div>
+
+          <!-- Item 15 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_wheelchair_check')">
+            <input type="checkbox" id="t_wheelchair_check" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_wheelchair_check" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">전동휠체어 배터리·타이어 및 보조기기 지자체 무상 점검</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">지자체 장애인 보조기기 수리센터를 통해 연 1회 무상 점검 및 부품 교체 바우처(기초수급 연간 20만원 지원)를 사용합니다.</span>
+            </label>
+          </div>
+
+          <!-- Item 16 -->
+          <div class="flex items-start gap-3.5 p-3.5 rounded-2xl border border-slate-200 hover:border-brand-cyan bg-slate-50/60 hover:bg-white transition cursor-pointer" onclick="toggleTask('t_health_screening')">
+            <input type="checkbox" id="t_health_screening" class="w-6 h-6 text-brand-cyan rounded-lg mt-0.5 accent-teal-600 pointer-events-none">
+            <label for="t_health_screening" class="cursor-pointer text-sm leading-relaxed select-none">
+              <span class="font-bold text-slate-900 block hc-box">국가 무료 일반건강검진 & 구강검진 수검</span>
+              <span class="text-xs text-slate-500 hc-subtext block mt-0.5">뇌성마비 환자에게 흔한 연하장애, 치아 마모, 위장 장애를 조기에 스크리닝합니다.</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- TAB 2: EMERGENCY MEDICAL & WELFARE CARD (A4 PRINT OPTIMIZED) -->
+    <section id="tab-card" class="hidden space-y-6">
+
+      <!-- Action Tools -->
+      <div class="hc-box bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 flex flex-wrap items-center justify-between gap-3 shadow-sm no-print">
+        <div>
+          <h3 class="font-black text-slate-900 text-base sm:text-lg hc-box">응급실·의료진 제출용 '1장 의료·복지 요약 카드'</h3>
+          <p class="text-xs sm:text-sm text-slate-500 hc-subtext">입력하신 모든 내용은 브라우저에 자동 저장되며, A4 규격 출력 또는 카카오톡 전송이 가능합니다.</p>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <button onclick="readFullCardAloud()" class="touch-target px-3.5 py-2 rounded-xl bg-purple-100 hover:bg-purple-200 text-purple-900 font-extrabold text-xs sm:text-sm flex items-center gap-1.5 transition">
+            <span>🔊 전체 카드 음성 낭독</span>
+          </button>
+          <button onclick="copyCardSummaryText()" class="touch-target px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs sm:text-sm border border-slate-300 flex items-center gap-1.5 transition">
+            <span>📋 카톡 요약 복사</span>
+          </button>
+          <button onclick="window.print()" class="touch-target px-4 py-2 rounded-xl bg-brand-cyan hover:bg-brand-cyanDark text-brand-deepNavy font-black text-xs sm:text-sm shadow flex items-center gap-1.5 transition">
+            <span>🖨️ A4 규격 인쇄</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Printable A4 Clean Medical Sheet -->
+      <div id="printCard" class="hc-box bg-white rounded-3xl p-6 sm:p-9 border-2 border-slate-300 shadow-md space-y-6">
+        
+        <!-- Header -->
+        <div class="border-b-2 border-slate-900 pb-4 flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <div class="inline-block bg-brand-deepNavy text-white text-xs font-black px-2.5 py-0.5 rounded tracking-wider mb-1">
+              기초의료급여 독거 장애인 긴급 의료·복지 지침
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              1인 뇌성마비 응급 의료카드
+            </h2>
+          </div>
+          <div class="text-right text-xs text-slate-500 hc-subtext">
+            <p class="font-bold text-red-600">※ 보호자 없는 독거 가구 - 전담 복지사 우선 연락</p>
+            <p id="cardGeneratedDate" class="font-semibold text-slate-700 hc-subtext">작성일: 2026.09.28</p>
+          </div>
+        </div>
+
+        <!-- Section 1: Basic & Welfare Status -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 mb-1 hc-subtext">성명</label>
+            <input type="text" id="p_name" placeholder="홍길동" oninput="saveProfileData()" class="w-full font-bold text-base px-3 py-2 bg-white border border-slate-300 rounded-xl">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 mb-1 hc-subtext">생년월일 / 성별</label>
+            <input type="text" id="p_birth" placeholder="1970.08.15 (남)" oninput="saveProfileData()" class="w-full text-base px-3 py-2 bg-white border border-slate-300 rounded-xl">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 mb-1 hc-subtext">국민기초생활 의료급여 종별</label>
+            <select id="p_med_aid" onchange="saveProfileData()" class="w-full text-sm font-bold px-3 py-2.5 bg-white border border-slate-300 rounded-xl text-teal-800">
+              <option value="의료급여 1종 수급자 (본인부담 전액 면제)">의료급여 1종 (전액 면제)</option>
+              <option value="의료급여 2종 수급자">의료급여 2종</option>
+              <option value="차상위 본인부담경감 대상자">차상위 경감 대상자</option>
+              <option value="일반 건강보험">일반 건강보험</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 mb-1 hc-subtext">혈액형</label>
+            <select id="p_blood" onchange="saveProfileData()" class="w-full text-base px-3 py-2 bg-white border border-slate-300 rounded-xl">
+              <option value="RH+ A형">RH+ A형</option>
+              <option value="RH+ B형">RH+ B형</option>
+              <option value="RH+ O형">RH+ O형</option>
+              <option value="RH+ AB형">RH+ AB형</option>
+              <option value="RH- 희귀">RH- 희귀</option>
+              <option value="미상">미상</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Section 2: Cerebral Palsy & Physical Characteristics -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="block text-xs font-black text-brand-deepNavy hc-box">🧠 뇌성마비 유형 & 보행·이동 상태</label>
+            <select id="p_cp_type" onchange="saveProfileData()" class="w-full text-sm font-bold px-3 py-2 bg-white border border-slate-300 rounded-xl">
+              <option value="경직형 양마비 (전동휠체어 사용, 침상 이승 보조 필요)">경직형 양마비 (전동휠체어 / 침상 이승 보조)</option>
+              <option value="경직형 편마비 (지팡이 또는 단거리 독립 보행)">경직형 편마비 (보조기구 사용 보행)</option>
+              <option value="무정위운동형 (불수의적 흔들림 있음, 언어장애 동반)">무정위형 (불수의 운동 / 언어장애 동반)</option>
+              <option value="실조형 뇌성마비 (균형 유지 어려움, 낙상 고위험)">실조형 (균형 장애 / 낙상 주의)</option>
+              <option value="혼합형 중증 뇌성마비 (침상 생활 / 전폭적 지원 필요)">혼합형 중증 (전폭적 수발 필요)</option>
+            </select>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-black text-brand-deepNavy hc-box">🗣️ 의사소통 방식 (언어·AAC)</label>
+            <select id="p_comm_type" onchange="saveProfileData()" class="w-full text-sm font-bold px-3 py-2 bg-white border border-slate-300 rounded-xl">
+              <option value="조음장애 있으나 청취·인지 정상 (천천히 대화 가능)">조음장애 있으나 청취·인지 완전 정상</option>
+              <option value="필담(글자/스마트폰 타이핑) 또는 손짓 소통 희망">필담(스마트폰 텍스트 입력) 소통</option>
+              <option value="보완대체의사소통(AAC) 그림판 활용">AAC 그림판 / 태블릿 활용</option>
+              <option value="단어 위주 및 고개 끄덕임(예/아니오) 소통">단답형 (예/아니오) 소통</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Section 3: Critical Medical Instructions for Staff -->
+        <div class="p-4 bg-red-50/80 border-2 border-red-200 rounded-2xl space-y-2">
+          <label class="block text-xs font-black text-red-800 uppercase tracking-wide">
+            ⚠️ 의료진 긴급 주의사항 (근긴장, 발작, 침상 이승 등)
+          </label>
+          <textarea id="p_cautions" rows="2" oninput="saveProfileData()" class="w-full text-xs sm:text-sm p-3 bg-white border border-red-300 rounded-xl leading-relaxed text-slate-800" placeholder="예: 긴장 시 전신 강직이 심해지므로 힘으로 누르지 마세요. 발작 이력 있음. 휠체어에서 침대로 옮길 때 2인 보조 필요."></textarea>
+        </div>
+
+        <!-- Section 4: Medications & Allergies with Add/Delete Chips -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-700 hc-box">💊 현재 복용 중인 약물 목록 (처방약)</label>
+            <div class="flex gap-2 no-print">
+              <input type="text" id="newMedInput" placeholder="약물명 (예: 바클로펜 10mg 아침)" class="w-full text-xs p-2.5 bg-white border rounded-xl">
+              <button onclick="addMedication()" class="touch-target px-3 py-1 bg-slate-800 text-white rounded-xl text-xs font-bold whitespace-nowrap">추가</button>
+            </div>
+            <div id="medListContainer" class="flex flex-wrap gap-1.5 min-h-[50px] p-2 bg-slate-50 border rounded-xl">
+              <!-- Medication Chips populated via JS -->
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-700 hc-box">🚫 알레르기 및 약물 부작용</label>
+            <div class="flex gap-2 no-print">
+              <input type="text" id="newAllergyInput" placeholder="알레르기 (예: 페니실린 쇼크, 소염진통제 위장장애)" class="w-full text-xs p-2.5 bg-white border rounded-xl">
+              <button onclick="addAllergy()" class="touch-target px-3 py-1 bg-slate-800 text-white rounded-xl text-xs font-bold whitespace-nowrap">추가</button>
+            </div>
+            <div id="allergyListContainer" class="flex flex-wrap gap-1.5 min-h-[50px] p-2 bg-slate-50 border rounded-xl">
+              <!-- Allergy Chips populated via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5: Public Welfare Contacts & Emergency Guardians -->
+        <div class="p-5 bg-teal-50/70 border-2 border-teal-200 rounded-2xl space-y-4">
+          <div class="flex items-center justify-between flex-wrap gap-1">
+            <h4 class="font-black text-teal-900 text-sm">
+              🏛️ 전담 공공복지 연락망 & 비상 보호자 (병원 입원 시 필수 연락처)
+            </h4>
+            <span class="text-xs text-teal-800 font-bold">1인 가구 대리인 체계</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1 hc-subtext">의료급여 관리사 (시·군·구청)</label>
+              <input type="text" id="p_contact_medmgr" placeholder="김간호사 (구청 의무과: 02-xxx-xxxx)" oninput="saveProfileData()" class="w-full text-xs sm:text-sm px-3 py-2 bg-white border border-slate-300 rounded-xl font-bold">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1 hc-subtext">전담 사회복지사 (복지관/IL센터)</label>
+              <input type="text" id="p_contact_sw" placeholder="이복지사 (마포장애인복지관: 010-xxxx)" oninput="saveProfileData()" class="w-full text-xs sm:text-sm px-3 py-2 bg-white border border-slate-300 rounded-xl font-bold">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1 hc-subtext">동주민센터 복지플래너</label>
+              <input type="text" id="p_contact_gov" placeholder="박주무관 (주민센터: 02-xxx-xxxx)" oninput="saveProfileData()" class="w-full text-xs sm:text-sm px-3 py-2 bg-white border border-slate-300 rounded-xl font-bold">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 6: Official Registrations Status -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+            <span class="block text-xs font-bold text-slate-500 hc-subtext">사전연명의료의향서</span>
+            <select id="p_reg_will" onchange="saveProfileData()" class="mt-1 w-full text-xs font-bold p-1 bg-white border rounded-lg">
+              <option value="국립연명의료관리기관 정식 등록 완료">등록 완료 (연명의료 거부)</option>
+              <option value="미등록">미등록</option>
+            </select>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+            <span class="block text-xs font-bold text-slate-500 hc-subtext">119 안심콜</span>
+            <select id="p_reg_119" onchange="saveProfileData()" class="mt-1 w-full text-xs font-bold p-1 bg-white border rounded-lg">
+              <option value="119 안심콜 뇌성마비·의료급여 등록 완료">등록 완료 (출동 구급대 확인 가능)</option>
+              <option value="미등록">미등록</option>
+            </select>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+            <span class="block text-xs font-bold text-slate-500 hc-subtext">장애인 응급안전안심시스템</span>
+            <select id="p_reg_iot" onchange="saveProfileData()" class="mt-1 w-full text-xs font-bold p-1 bg-white border rounded-lg">
+              <option value="댁내 IoT 센서 및 비상호출기 설치 완료">설치 완료 (활동감지기 작동)</option>
+              <option value="미설치">미설치</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Card Footer -->
+        <div class="pt-3 border-t border-slate-200 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-1 hc-subtext">
+          <span>* 본 서류는 보호자 없는 뇌성마비 독거 수급자의 의료접근권과 신체적 안전을 위해 작성되었습니다.</span>
+          <span class="text-slate-500 font-bold">기초수급 뇌성마비 1인 가구 안전망 플랫폼</span>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- TAB 3: PUBLIC WELFARE & LEGAL AID GUIDE -->
+    <section id="tab-welfare" class="hidden space-y-6">
+
+      <div class="hc-box bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+        <div>
+          <span class="px-3 py-1 bg-brand-cyan/20 text-brand-cyanDark text-xs font-black rounded-full">공공 예산 100% 지원 제도</span>
+          <h2 class="text-xl sm:text-2xl font-black text-brand-deepNavy mt-2 hc-box">
+            기초생활수급 뇌성마비 1인 독거인을 위한 법정 필수 복지제도
+          </h2>
+          <p class="text-slate-600 text-sm mt-1 leading-relaxed hc-subtext">
+            가족이 없어도 국가의 공공후견과 의료급여 안전망을 통해 자신의 권익과 생명을 온전히 지킬 수 있습니다.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- Card 1: 공공성년후견 지원사업 -->
+          <div class="hc-box p-6 bg-slate-50 rounded-3xl border border-slate-200 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-0.5 bg-purple-100 text-purple-900 text-xs font-bold rounded-md">보건복지부 전액 국비</span>
+                <span class="text-xs font-bold text-slate-400">법적 대리인 확보</span>
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 hc-box">공공성년후견 지원사업</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed hc-subtext">
+                판단능력이 부족하거나 거동이 어려운 무연고·독거 기초수급 발달 및 뇌병변 장애인을 위해, 국가가 법원에 성년후견 심판을 청구하고 변호사·전문가 후견인 보수(월 최대 지원)를 국비로 전액 지급합니다.
+              </p>
+              <ul class="text-xs text-slate-500 space-y-1 bg-white p-3 rounded-xl border hc-box">
+                <li>• <strong>지원 내용:</strong> 법원 후견 청구비용(최대 50만원) + 후견인 활동비 전액 무료</li>
+                <li>• <strong>후견 업무:</strong> 은행 재산 관리, 임대주택 계약, 병원 입원 및 수술 동의 보조</li>
+                <li>• <strong>신청처:</strong> 거주지 시·군·구청 장애인복지과 또는 한국장애인개발원</li>
+              </ul>
+            </div>
+            <div class="p-3 bg-purple-50 text-purple-900 text-xs font-semibold rounded-xl">
+              💡 팁: 주민센터 사회복지 전담 공무원에게 "직권 후견 청구"를 의뢰할 수 있습니다.
+            </div>
+          </div>
+
+          <!-- Card 2: 장애인 응급안전안심서비스 -->
+          <div class="hc-box p-6 bg-slate-50 rounded-3xl border border-slate-200 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-0.5 bg-red-100 text-red-800 text-xs font-bold rounded-md">소방청-복지부 연계</span>
+                <span class="text-xs font-bold text-slate-400">낙상·고독사 방지</span>
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 hc-box">장애인 응급안전안심서비스 (댁내 IoT)</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed hc-subtext">
+                중증 장애인 가구에 ICT 센서(화재 감지, 가스 누출, 활동량 감지기, 원터치 응급호출벨)를 무상 설치합니다. 쓰러져 일정 시간 움직임이 없으면 자동으로 119와 전담 관리요원에게 긴급 출동 요청이 접수됩니다.
+              </p>
+              <ul class="text-xs text-slate-500 space-y-1 bg-white p-3 rounded-xl border hc-box">
+                <li>• <strong>대상:</strong> 중증 장애인 중 독거 가구 및 취약 가구 (우선 설치)</li>
+                <li>• <strong>비용:</strong> 기기 설치비 및 통신비 전액 무료 (국비)</li>
+                <li>• <strong>신청처:</strong> 주민센터 또는 거주지 지역센터(노인/장애인복지관)</li>
+              </ul>
+            </div>
+            <div class="p-3 bg-red-50 text-red-900 text-xs font-semibold rounded-xl">
+              📞 문의: 보건복지상담센터 국번없이 ☎ 129
+            </div>
+          </div>
+
+          <!-- Card 3: 장애인 건강주치의 & 방문간호 -->
+          <div class="hc-box p-6 bg-slate-50 rounded-3xl border border-slate-200 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-md">국민건강보험공단</span>
+                <span class="text-xs font-bold text-slate-400">집으로 오는 의사</span>
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 hc-box">장애인 건강주치의 제도</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed hc-subtext">
+                이동이 극히 힘든 중증 뇌성마비 독거 수급자를 위해 의사와 간호사가 거주지로 직접 찾아와 만성질환(고혈압·당뇨) 진료, 욕창 드레싱, 재활 운동을 처방합니다. 의료급여 수급자는 본인부담금이 면제됩니다.
+              </p>
+              <ul class="text-xs text-slate-500 space-y-1 bg-white p-3 rounded-xl border hc-box">
+                <li>• <strong>서비스:</strong> 일반 건강관리, 주장애(재활) 관리, 간호사 방문간호</li>
+                <li>• <strong>비용:</strong> 의료급여 1·2종 본인부담금 0원</li>
+                <li>• <strong>조회:</strong> 국민건강보험공단 누리집 '장애인 건강주치의 의료기관 찾기'</li>
+              </ul>
+            </div>
+            <div class="p-3 bg-emerald-50 text-emerald-900 text-xs font-semibold rounded-xl">
+              🌐 국민건강보험 누리집(nhis.or.kr)에서 주치의 등록의원 검색 가능
+            </div>
+          </div>
+
+          <!-- Card 4: 공영장례 & 무연고 사후 안심 -->
+          <div class="hc-box p-6 bg-slate-50 rounded-3xl border border-slate-200 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-0.5 bg-slate-200 text-slate-800 text-xs font-bold rounded-md">지자체 조례 시행</span>
+                <span class="text-xs font-bold text-slate-400">존엄한 마무리</span>
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 hc-box">지자체 공영장례 & 생전 장례주관자 지정</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed hc-subtext">
+                가족이 없는 독거 장애인이 사망했을 때 단순 '무연고 행정 처리(즉시 화장)'되는 비극을 막고, 빈소를 마련해 애도할 수 있도록 지자체가 장례식장과 비용을 지원하는 공영장례 제도입니다.
+              </p>
+              <ul class="text-xs text-slate-500 space-y-1 bg-white p-3 rounded-xl border hc-box">
+                <li>• <strong>지원:</strong> 공영장례 전용 빈소, 영정 사진, 장례용품 및 화장비 지원</li>
+                <li>• <strong>핵심 권리:</strong> 생전에 신뢰하는 복지사나 친구를 '장례주관자'로 구청에 지정 가능</li>
+                <li>• <strong>상담:</strong> 거주지 구청 복지정책과 또는 비영리단체 '나눔과나눔'</li>
+              </ul>
+            </div>
+            <div class="p-3 bg-slate-100 text-slate-800 text-xs font-semibold rounded-xl">
+              🕊️ 장례주관자 지정 시 혈연이 아니어도 합법적인 상주(喪主)가 될 수 있습니다.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Toast Notification Overlay -->
+  <div id="toastBox" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden bg-slate-900/95 text-white px-5 py-3.5 rounded-2xl shadow-2xl border-2 border-brand-cyan text-sm font-bold flex items-center gap-2.5 transition">
+    <span id="toastIcon">🔔</span>
+    <span id="toastMsg">알림 메시지</span>
+  </div>
+
+  <script>
+    // Storage keys
+    const KEY_TASKS = 'solo_cp_welfare_tasks_2026';
+    const KEY_PROFILE = 'solo_cp_welfare_profile_2026';
+    const KEY_MEDS = 'solo_cp_welfare_meds_2026';
+    const KEY_ALLERGIES = 'solo_cp_welfare_allergies_2026';
+
+    let isHighContrast = false;
+    let isLargeFont = false;
+
+    // All 16 Task IDs
+    const TASK_IDS = [
+      't_119_safe', 't_emergency_iot', 't_phone_sos', 't_door_access',
+      't_med_manager', 't_special_care', 't_health_doctor', 't_hospital_kit',
+      't_public_guardian', 't_living_will', 't_public_funeral', 't_pill_box',
+      't_cist_check', 't_contacts_update', 't_wheelchair_check', 't_health_screening'
+    ];
+
+    // Profile input field mapping
+    const PROFILE_FIELDS = [
+      'p_name', 'p_birth', 'p_med_aid', 'p_blood',
+      'p_cp_type', 'p_comm_type', 'p_cautions',
+      'p_contact_medmgr', 'p_contact_sw', 'p_contact_gov',
+      'p_reg_will', 'p_reg_119', 'p_reg_iot'
+    ];
+
+    let medications = ['바클로펜 (근이완제) 10mg 아침·저녁', '마그밀정 (변비완화) 취침전'];
+    let allergies = ['페니실린 쇼크 주의', '비보호자 임의 신체억압 금지'];
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadChecklist();
+      loadProfileData();
+      loadChips();
+      updateProgress();
+
+      // Display today's date
+      const today = new Date();
+      const dateString = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+      const dateEl = document.getElementById('cardGeneratedDate');
+      if (dateEl) dateEl.innerText = `작성일: ${dateString}`;
+    });
+
+    // 1. Tab Navigation
+    function switchTab(targetTabId) {
+      const tabs = ['tab-checklist', 'tab-card', 'tab-welfare'];
+      tabs.forEach(id => {
+        const section = document.getElementById(id);
+        const btn = document.getElementById(`btn-${id}`);
+        if (section && btn) {
+          if (id === targetTabId) {
+            section.classList.remove('hidden');
+            btn.classList.add('bg-brand-navy', 'text-white', 'active-btn');
+            btn.classList.remove('text-slate-700', 'hover:bg-slate-100');
+          } else {
+            section.classList.add('hidden');
+            btn.classList.remove('bg-brand-navy', 'text-white', 'active-btn');
+            btn.classList.add('text-slate-700', 'hover:bg-slate-100');
+          }
+        }
+      });
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+    }
+
+    // 2. Checklist State Management
+    function loadChecklist() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(KEY_TASKS) || '{}');
+        TASK_IDS.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.checked = !!saved[id];
+          }
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function toggleTask(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.checked = !el.checked;
+
+      const state = {};
+      TASK_IDS.forEach(tId => {
+        const checkbox = document.getElementById(tId);
+        if (checkbox) state[tId] = checkbox.checked;
+      });
+      localStorage.setItem(KEY_TASKS, JSON.stringify(state));
+
+      updateProgress();
+      if (el.checked) {
+        showToast('🎯 안전망 항목 하나를 완료하였습니다!');
+      }
+    }
+
+    function updateProgress() {
+      let count = 0;
+      TASK_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.checked) count++;
+      });
+      const total = TASK_IDS.length;
+      const pct = Math.round((count / total) * 100);
+
+      const percentEl = document.getElementById('progressPercent');
+      const barEl = document.getElementById('progressBar');
+      const sumEl = document.getElementById('progressSummary');
+
+      if (percentEl) percentEl.innerText = `${pct}% (${count} / ${total} 완료)`;
+      if (barEl) barEl.style.width = `${pct}%`;
+
+      if (sumEl) {
+        if (pct === 0) {
+          sumEl.innerText = "아직 시작하지 않았습니다. '119 안심콜'과 '동주민센터 응급안전안심서비스'부터 완료해 보세요.";
+        } else if (pct < 50) {
+          sumEl.innerText = "좋은 출발입니다! 비상시 골든타임을 확보할 수 있는 최소한의 기반이 마련되고 있습니다.";
+        } else if (pct < 90) {
+          sumEl.innerText = "공공성년후견과 사전연명의료의향서 등 법적 권한 대행 서류를 마저 완료해 보세요.";
+        } else {
+          sumEl.innerText = "🎉 대단합니다! 기초수급 뇌성마비 1인 독거인을 위한 4단계 안전망이 빈틈없이 완성되었습니다!";
+        }
+      }
+    }
+
+    // 3. Profile Data Persistence
+    function saveProfileData() {
+      const data = {};
+      PROFILE_FIELDS.forEach(field => {
+        const el = document.getElementById(field);
+        if (el) data[field] = el.value;
+      });
+      localStorage.setItem(KEY_PROFILE, JSON.stringify(data));
+    }
+
+    function loadProfileData() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(KEY_PROFILE) || '{}');
+        PROFILE_FIELDS.forEach(field => {
+          const el = document.getElementById(field);
+          if (el && saved[field] !== undefined) {
+            el.value = saved[field];
+          }
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // 4. Medications & Allergies Chips Management
+    function loadChips() {
+      try {
+        const savedMeds = localStorage.getItem(KEY_MEDS);
+        if (savedMeds) medications = JSON.parse(savedMeds);
+        
+        const savedAllergies = localStorage.getItem(KEY_ALLERGIES);
+        if (savedAllergies) allergies = JSON.parse(savedAllergies);
+      } catch (e) {
+        console.error(e);
+      }
+      renderChips();
+    }
+
+    function renderChips() {
+      const medContainer = document.getElementById('medListContainer');
+      const algContainer = document.getElementById('allergyListContainer');
+
+      if (medContainer) {
+        medContainer.innerHTML = medications.map((med, idx) => `
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-teal-300 text-teal-900 rounded-lg text-xs font-bold shadow-sm">
+            <span>💊 ${med}</span>
+            <button onclick="removeMed(${idx})" class="text-rose-600 hover:text-rose-800 text-sm font-black no-print leading-none ml-1">&times;</button>
+          </span>
+        `).join('');
+      }
+
+      if (algContainer) {
+        algContainer.innerHTML = allergies.map((alg, idx) => `
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-rose-300 text-rose-900 rounded-lg text-xs font-bold shadow-sm">
+            <span>⚠️ ${alg}</span>
+            <button onclick="removeAllergy(${idx})" class="text-rose-600 hover:text-rose-800 text-sm font-black no-print leading-none ml-1">&times;</button>
+          </span>
+        `).join('');
+      }
+    }
+
+    function addMedication() {
+      const input = document.getElementById('newMedInput');
+      if (!input) return;
+      const val = input.value.trim();
+      if (!val) return;
+      medications.push(val);
+      localStorage.setItem(KEY_MEDS, JSON.stringify(medications));
+      input.value = '';
+      renderChips();
+      saveProfileData();
+    }
+
+    function removeMed(index) {
+      medications.splice(index, 1);
+      localStorage.setItem(KEY_MEDS, JSON.stringify(medications));
+      renderChips();
+    }
+
+    function addAllergy() {
+      const input = document.getElementById('newAllergyInput');
+      if (!input) return;
+      const val = input.value.trim();
+      if (!val) return;
+      allergies.push(val);
+      localStorage.setItem(KEY_ALLERGIES, JSON.stringify(allergies));
+      input.value = '';
+      renderChips();
+      saveProfileData();
+    }
+
+    function removeAllergy(index) {
+      allergies.splice(index, 1);
+      localStorage.setItem(KEY_ALLERGIES, JSON.stringify(allergies));
+      renderChips();
+    }
+
+    // 5. Web Speech API (TTS) for Voice Output
+    function speakText(text) {
+      if (!('speechSynthesis' in window)) {
+        showToast('⚠️ 현재 브라우저는 음성 합성 기능을 지원하지 않습니다.');
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'ko-KR';
+      utterance.rate = 0.9; // Slightly slower, clear tone
+      utterance.pitch = 1.0;
+      window.speechSynthesis.speak(utterance);
+      showToast('🔊 음성 안내를 출력하고 있습니다.');
+    }
+
+    function readFullCardAloud() {
+      const name = document.getElementById('p_name').value || '성명 미입력';
+      const medAid = document.getElementById('p_med_aid').value;
+      const cpType = document.getElementById('p_cp_type').value;
+      const commType = document.getElementById('p_comm_type').value;
+      const cautions = document.getElementById('p_cautions').value || '기재된 특이사항 없음';
+      const medList = medications.length > 0 ? medications.join(', ') : '등록된 약물 없음';
+      const swContact = document.getElementById('p_contact_sw').value || '미입력';
+
+      const script = `긴급 의료 요약 정보입니다. 환자 성명은 ${name} 님이며, ${medAid} 입니다. ${cpType} 특성이 있으며, 의사소통은 ${commType} 입니다. 중요 주의사항은 다음과 같습니다. ${cautions}. 현재 복용 중인 약물은 ${medList} 입니다. 담당 사회복지사는 ${swContact} 입니다.`;
+      speakText(script);
+    }
+
+    // 6. Copy Summary for KakaoTalk
+    function copyCardSummaryText() {
+      const name = document.getElementById('p_name').value || '(성명 미입력)';
+      const birth = document.getElementById('p_birth').value || '';
+      const medAid = document.getElementById('p_med_aid').value;
+      const cpType = document.getElementById('p_cp_type').value;
+      const commType = document.getElementById('p_comm_type').value;
+      const cautions = document.getElementById('p_cautions').value || '없음';
+      const medList = medications.join(', ') || '없음';
+      const allergiesList = allergies.join(', ') || '없음';
+      const medMgr = document.getElementById('p_contact_medmgr').value || '미지정';
+      const swContact = document.getElementById('p_contact_sw').value || '미지정';
+
+      const summary = `[기초수급 뇌성마비 1인 가구 긴급 의료·복지 요약]
+• 환자: ${name} (${birth})
+• 수급 유형: ${medAid}
+• 뇌성마비/신체상태: ${cpType}
+• 의사소통: ${commType}
+• 의료진 주의사항: ${cautions}
+• 복용약: ${medList}
+• 알레르기/부작용: ${allergiesList}
+• 구청 의료급여관리사: ${medMgr}
+• 전담 사회복지사: ${swContact}
+* 환자는 보호자가 없는 독거 가구이므로 위 전담 복지사에게 즉시 연락해 주시기 바랍니다.`;
+
+      const textarea = document.createElement('textarea');
+      textarea.value = summary;
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showToast('📋 요약 텍스트가 클립보드에 복사되었습니다. 카카오톡에 붙여넣으세요!');
+      } catch (e) {
+        showToast('⚠️ 복사 실패: 직접 복사해 주세요.');
+      }
+      document.body.removeChild(textarea);
+    }
+
+    // 7. Accessibility Enhancements
+    function toggleFontSize() {
+      isLargeFont = !isLargeFont;
+      const root = document.documentElement;
+      const btn = document.getElementById('fontSizeToggleBtn');
+      if (isLargeFont) {
+        root.style.setProperty('--base-font-size', '21px');
+        if (btn) btn.classList.add('bg-brand-cyan', 'text-brand-deepNavy');
+        showToast('🔍 큰 글자 모드 (21px) 활성화');
+      } else {
+        root.style.setProperty('--base-font-size', '17px');
+        if (btn) btn.classList.remove('bg-brand-cyan', 'text-brand-deepNavy');
+        showToast('🔎 기본 글자 모드 (17px) 복원');
+      }
+    }
+
+    function toggleHighContrast() {
+      isHighContrast = !isHighContrast;
+      const body = document.body;
+      const btn = document.getElementById('hcToggleBtn');
+      if (isHighContrast) {
+        body.classList.add('high-contrast');
+        if (btn) {
+          btn.classList.add('bg-yellow-300', 'text-black');
+          btn.classList.remove('bg-slate-800', 'text-yellow-300');
+        }
+        showToast('⚡ 고대비 흑황 모드가 켜졌습니다.');
+      } else {
+        body.classList.remove('high-contrast');
+        if (btn) {
+          btn.classList.remove('bg-yellow-300', 'text-black');
+          btn.classList.add('bg-slate-800', 'text-yellow-300');
+        }
+        showToast('☀️ 일반 시각 모드로 전환되었습니다.');
+      }
+    }
+
+    // 8. Custom Accessible Toast
+    function showToast(msg) {
+      const toast = document.getElementById('toastBox');
+      const msgEl = document.getElementById('toastMsg');
+      if (!toast || !msgEl) return;
+      msgEl.innerText = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
